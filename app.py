@@ -179,15 +179,7 @@ app.layout = html.Div(
                             children=[
                                 dcc.Input(id="address", placeholder="Enter wallet address...", type="text"),
 
-                                
-                                
-    
-                            ],
-                        ),         
-                        html.Div(
-                            className="display-inlineblock float-right",
-                            children=[
-                               dcc.Dropdown(id='chain_id',  options = [
+                                dcc.Dropdown(id='chain_id',  options = [
                                             {"label": "Ethereum", "value": "1"},
                                             {"label": "Matic", "value": "137"},
                                             {"label": "Binance Smart Chain", "value": "56"},
@@ -199,8 +191,16 @@ app.layout = html.Div(
                 
         ),
                                 
+    
                             ],
-                          style={"width": "20%"}), html.Div(id='container')
+                        ),         
+                        html.Div(
+                            className="display-inlineblock float-right",
+                            children=[
+                               html.Button('Add Wallet', id='btn-1', n_clicks=0)
+                                
+                            ],
+                        ), html.Div(id='container')
                         
                     ],
                 ),
@@ -230,47 +230,48 @@ def set_time(data):
 
 def display(value,address):
 
-    # ctx = dash.callback_context
+    ctx = dash.callback_context
   
     api_key= 'ckey_57eeb470248541708eeaf028c9d'
  
-
-    # if not ctx.triggered:
-    #    pass
     
-    # else:
-    lis=[]
-    for i in value :
-           
-            chain_id= i
-            address= address
-            response = requests.get(f"https://api.covalenthq.com/v1/{chain_id}/address/{address}/portfolio_v2/?format=format%3Dcsv&key={api_key}").json()['items']
+    if not ctx.triggered:
+        pass
+    
+    else:
+        lis=[]
+    
+        for i in value :
+            
+                chain_id= i
+                address= address
+                response = requests.get(f"https://api.covalenthq.com/v1/{chain_id}/address/{address}/portfolio_v2/?format=format%3Dcsv&key={api_key}").json()['items']
 
-            data=response
-            data=normalize(data)
-            data['timestamp']=set_time(data)
+                data=response
+                data=normalize(data)
+                data['timestamp']=set_time(data)
 
-            lis.append( 
-                html.Div([
-                    dcc.Graph(
-                            id='graph1',
-                            figure=fig1(data),
+                lis.append( 
+                    html.Div([
+                        dcc.Graph(
+                                id='graph1',
+                                figure=fig1(data),
+                                style={'display': 'inline-block'
+
+                            },
+                        ),
+                        dcc.Graph(
+                            id='graph2',
+                            figure=fig2(data),
                             style={'display': 'inline-block'
 
-                        },
-                    ),
-                    dcc.Graph(
-                        id='graph2',
-                        figure=fig2(data),
-                        style={'display': 'inline-block'
+                            },
+                        )
 
-                        },
+                        ])
                     )
-
-                    ])
-                )
-            
-    return lis
+                
+        return lis
 
 
             
