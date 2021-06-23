@@ -264,7 +264,8 @@ def display(value,address):
 
                     ])
                 )
-        return lis
+            
+            return lis
 
 
             
@@ -276,4 +277,4 @@ def update_news_div(n):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=False)
