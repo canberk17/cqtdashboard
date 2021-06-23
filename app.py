@@ -247,13 +247,13 @@ def display(value,address):
             data['timestamp']=set_time(data)
 
             lis.append( html.Div([
-        dcc.Graph(
-                id='graph1',
-                figure=fig1(data),
-                style={'display': 'inline-block'
+             dcc.Graph(
+                    id='graph1',
+                    figure=fig1(data),
+                    style={'display': 'inline-block'
 
-                },
-            ),
+                 },
+             ),
             dcc.Graph(
                 id='graph2',
                 figure=fig2(data),
@@ -264,11 +264,6 @@ def display(value,address):
 
             ])
            )
-          
-          
- 
-      
-    
         return lis
 
 
