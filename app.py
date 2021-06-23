@@ -246,7 +246,8 @@ def display(value,address):
             data=normalize(data)
             data['timestamp']=set_time(data)
 
-            lis.append( html.Div([
+            lis.append( 
+                html.Div([
                     dcc.Graph(
                             id='graph1',
                             figure=fig1(data),
