@@ -233,7 +233,6 @@ def display(value,address):
     ctx = dash.callback_context
   
     api_key= 'ckey_57eeb470248541708eeaf028c9d'
- 
     
     if not ctx.triggered:
         pass
