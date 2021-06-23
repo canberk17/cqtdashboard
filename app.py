@@ -230,6 +230,7 @@ def set_time(data):
 
 def display(value,address):
 
+    
     ctx = dash.callback_context
   
     api_key= 'ckey_57eeb470248541708eeaf028c9d'
@@ -239,38 +240,38 @@ def display(value,address):
     
     else:
         lis=[]
-    
-        for i in value :
-            
-                chain_id= i
-                address= address
-                response = requests.get(f"https://api.covalenthq.com/v1/{chain_id}/address/{address}/portfolio_v2/?format=format%3Dcsv&key={api_key}").json()['items']
+        if len(value) >0 :
+            for i in value :
+                
+                    chain_id= i
+                    address= address
+                    response = requests.get(f"https://api.covalenthq.com/v1/{chain_id}/address/{address}/portfolio_v2/?format=format%3Dcsv&key={api_key}").json()['items']
 
-                data=response
-                data=normalize(data)
-                data['timestamp']=set_time(data)
+                    data=response
+                    data=normalize(data)
+                    data['timestamp']=set_time(data)
 
-                lis.append( 
-                    html.Div([
-                        dcc.Graph(
-                                id='graph1',
-                                figure=fig1(data),
+                    lis.append( 
+                        html.Div([
+                            dcc.Graph(
+                                    id='graph1',
+                                    figure=fig1(data),
+                                    style={'display': 'inline-block'
+
+                                },
+                            ),
+                            dcc.Graph(
+                                id='graph2',
+                                figure=fig2(data),
                                 style={'display': 'inline-block'
 
-                            },
-                        ),
-                        dcc.Graph(
-                            id='graph2',
-                            figure=fig2(data),
-                            style={'display': 'inline-block'
+                                },
+                            )
 
-                            },
+                            ])
                         )
-
-                        ])
-                    )
-                
-        return lis
+                    
+            return lis
 
 
             
