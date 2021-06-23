@@ -220,23 +220,27 @@ def normalize(data):
 def set_time(data):
     return pd.to_datetime(data['timestamp'])
 
+
+
+
+
 @app.callback(Output('container', 'children'),
               Input("chain_id", "value"),
                Input("address", "value"),)
 
 def display(value,address):
 
-    ctx = dash.callback_context
+    # ctx = dash.callback_context
   
     api_key= 'ckey_57eeb470248541708eeaf028c9d'
  
 
-    if not ctx.triggered:
-       pass
+    # if not ctx.triggered:
+    #    pass
     
-    else:
-        lis=[]
-        for i in value :
+    # else:
+    lis=[]
+    for i in value :
            
             chain_id= i
             address= address
@@ -266,7 +270,7 @@ def display(value,address):
                     ])
                 )
             
-        return lis
+    return lis
 
 
             
