@@ -30,7 +30,7 @@ def fig1(df_nested):
 
     
     fig = px.pie(df, values='close.quote', names='contract_name',labels={             "contract_name":'Contract Name',
-                     "close.quote": "USD Value"} , title='Asset Allocation',color_discrete_sequence=px.colors.sequential.Plasma)
+                     "close.quote": "USD Value"} , title='Asset Allocation',color_discrete_sequence=["#ff4c8b", "#00d8d5",'#f7f7f7'])
     fig.update_traces(textposition='inside')
     # fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
     fig.update_layout(plot_bgcolor=colors['background'], paper_bgcolor=colors['background'],font_color=colors['text']
@@ -57,7 +57,7 @@ def fig2(df_nested):
     'text': '#FFFFFF'
 }
 
-    fig2=px.line(df_nested, x="timestamp", y="close.quote", color="contract_name",line_group="contract_ticker_symbol",labels={
+    fig2=px.line(df_nested, x="timestamp", y="close.quote", color="contract_name",color_discrete_sequence=["#ff4c8b", "#00d8d5",'#f7f7f7'], line_group="contract_ticker_symbol",labels={
                     "contract_name":'Contract Name',
                      "timestamp": "Date",
                      "close.quote": "USD Value",
@@ -68,7 +68,6 @@ def fig2(df_nested):
     
     
     return fig2
-
 
 app = dash.Dash(
     __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}],
