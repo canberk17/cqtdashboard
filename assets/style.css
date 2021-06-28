@@ -227,7 +227,7 @@
   select {
     height: 38px;
     padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
-    background-color: #fff;
+    background-color: white;
     border: 1px solid #D1D1D1;
     border-radius: 4px;
     box-shadow: none;
@@ -371,7 +371,7 @@
 /* Custom App CSS
 ---------------------------------------*/
 body{
-    background-color:#02042b;
+    background-color:#f7f7f7;
     color: #b2b2b2;
     height: 100vh;
     margin: 0;
@@ -400,7 +400,7 @@ body{
 }
 
 .table-news tr:hover{
-  background-color: #292B33;
+  background-color: #c7d1f7;
   cursor: pointer;
 }
 
@@ -444,7 +444,7 @@ th{
 }
 
 .div-left-panel{
-  background-color: #000220;
+  background-color: black;
   color: #b2b2b2;
   margin: 0px;
   height:100%;
@@ -477,7 +477,7 @@ th{
   margin: 24px 0px 0px 0px;
   padding: 5;
   height: 21%;
-  background-color: #000220;
+  background-color: black;
 }
 
 .div-close-orders{

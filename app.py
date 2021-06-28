@@ -20,7 +20,7 @@ from plotly import tools
 
 def fig1(df_nested):
     colors = {
-    'background': '#000220',
+    'background': 'black',
     'text': '#FFFFFF'
 }
 
@@ -35,6 +35,27 @@ def fig1(df_nested):
     # fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
     fig.update_layout(plot_bgcolor=colors['background'], paper_bgcolor=colors['background'],font_color=colors['text']
 )
+
+
+    fig.add_layout_image(
+    dict(
+        source="assets/CQT.svg",
+        xref="paper", yref="paper",
+        x=0.5, y=0.24,
+        sizex=0.5, sizey=0.6,
+        xanchor="center", yanchor="bottom"
+    )
+)
+
+    fig.add_layout_image(
+            dict(
+                source="assets/aa_footer.svg",
+                xref="paper", yref="paper",
+                x=0.7, y=(-0.20),
+                sizex=1.7, sizey=.8,
+                xanchor="center", yanchor="bottom"
+            )
+        )
     
     return fig
 
@@ -53,7 +74,7 @@ def fig1(df_nested):
 
 def fig2(df_nested):
     colors = {
-    'background': '#000220',
+    'background': 'black',
     'text': '#FFFFFF'
 }
 
@@ -65,8 +86,25 @@ def fig2(df_nested):
                  }, title='Asset Value Over Time', hover_name="contract_ticker_symbol")
     fig2.update_layout(plot_bgcolor=colors['background'], paper_bgcolor=colors['background'],font_color=colors['text'])
 
-    
-    
+    fig2.add_layout_image(
+    dict(
+        source="assets/CQT.svg",
+        xref="paper", yref="paper",
+        x=0.5, y=0.24,
+        sizex=0.5, sizey=0.6,
+        xanchor="center", yanchor="bottom"
+    )
+)
+
+    fig2.add_layout_image(
+            dict(
+                source="assets/aa_footer.svg",
+                xref="paper", yref="paper",
+                x=0.7, y=(-0.20),
+                sizex=1.7, sizey=.8,
+                xanchor="center", yanchor="bottom"
+            )
+        )
     return fig2
 
 app = dash.Dash(
@@ -81,7 +119,7 @@ PATH = pathlib.Path(__file__).parent
 
 # API Requests for news div
 news_requests = requests.get(
-    "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=da8e2e705b914f9f86ed2e9692e66012"
+    "https://newsapi.org/v2/everything?q=bitcoin&sources=bbc-news&apiKey=da8e2e705b914f9f86ed2e9692e66012"
 )
 
 # API Call to update news
@@ -141,7 +179,7 @@ app.layout = html.Div(
                     className="div-info",
                     children=[
                         html.Img(
-                            className="logo", src=app.get_asset_url("covalent.png")
+                            className="logo", src=app.get_asset_url("CQT.svg")
                         ),
                         html.H6(className="title-header", children="Covalent Analytics"),
                         html.P(
@@ -255,13 +293,16 @@ def display(value,address):
                             dcc.Graph(
                                     id='graph1',
                                     figure=fig1(data),
+                                    config= {'displaylogo': False},
                                     style={'display': 'inline-block'
 
                                 },
+                                
                             ),
                             dcc.Graph(
                                 id='graph2',
                                 figure=fig2(data),
+                                config= {'displaylogo': False},
                                 style={'display': 'inline-block'
 
                                 },
