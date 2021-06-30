@@ -16,7 +16,7 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 from dash.dependencies import Input, Output, State
 from plotly import tools
-
+import time
 
 def fig1(df_nested):
     colors = {
@@ -190,8 +190,10 @@ app.layout = html.Div(
                        
                     ],
                 ),
-                # html.Div(id='sentiment_data'),
-                
+                 dash_table.DataTable(
+                        id='datatable-paging',
+                        
+                    ),  
 
                 # Div for News Headlines
                 html.Div(
@@ -237,7 +239,14 @@ app.layout = html.Div(
                                html.Button('Add Wallet', id='btn-1', n_clicks=0)
                                 
                             ],
-                        ), html.Div(id='container')
+                        ),
+                            dcc.Loading(
+                            id="loading-1",
+                            color='#ff4c8b',
+                            type="circle",
+                            children=html.Div(id="loading-output-1")
+                     ),
+                       # html.Div(id='container')
                         
                     ],
                 ),
@@ -259,11 +268,15 @@ def set_time(data):
 
 
 
-
-
-@app.callback(Output('container', 'children'),
-              Input("chain_id", "value"),
+@app.callback(Output("loading-output-1", "children"), Input("chain_id", "value"),
                Input("address", "value"),)
+def input_triggers_spinner(value,address):
+    time.sleep(1)
+    return display(value,address)
+
+#@app.callback(Output('container', 'children'),
+ #             Input("chain_id", "value"),
+  #             Input("address", "value"),)
 
 def display(value,address):
 

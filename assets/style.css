@@ -613,3 +613,13 @@ button{
 ._dash-undo-redo {
   display: none;
 }
+
+
+@keyframes fadein {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 0.5;
+  }
+}
