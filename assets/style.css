@@ -623,3 +623,13 @@ button{
       opacity: 0.5;
   }
 }
+
+.dash-spinner {
+  background-image: url("dashboard_loader.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.dash-spinner * {
+  display: none !important;
+}

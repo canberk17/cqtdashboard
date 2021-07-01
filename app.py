@@ -242,8 +242,8 @@ app.layout = html.Div(
                         ),
                             dcc.Loading(
                             id="loading-1",
-                            color='#ff4c8b',
-                            type="circle",
+                            #color='#ff4c8b',
+                            type="default",
                             children=html.Div(id="loading-output-1")
                      ),
                        # html.Div(id='container')
@@ -269,7 +269,8 @@ def set_time(data):
 
 
 @app.callback(Output("loading-output-1", "children"), Input("chain_id", "value"),
-               Input("address", "value"),)
+               Input("address", "value"),
+                prevent_initial_call=True,)
 def input_triggers_spinner(value,address):
     time.sleep(1)
     return display(value,address)
