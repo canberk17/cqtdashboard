@@ -628,6 +628,7 @@ button{
   background-image: url("dashboard_loader.gif");
   background-size: contain;
   background-repeat: no-repeat;
+  
 }
 
 .dash-spinner * {

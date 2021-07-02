@@ -17,6 +17,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output, State
 from plotly import tools
 import time
+import dash_table
 
 def fig1(df_nested):
     colors = {
@@ -59,18 +60,34 @@ def fig1(df_nested):
     
     return fig
 
-# def social_score(data):
+ 
+def lunar_sentiment(data):
+    today=datetime.datetime.today().strftime("%Y -%m -%d")
+    df=data.loc[data['timestamp']>=today].groupby(['contract_name','contract_ticker_symbol']).mean('close.quote').reset_index()
+    ltick=[]
+    lsent=[]
+    for ticker in df['contract_ticker_symbol']:
 
-#     for ticker in data['contract_ticker_symbol']:
-#         lis=[]
-#         try:
-#             lc_response=requests.get(f"https://api.lunarcrush.com/v2?data=assets&key=olr3cu6lnc897ezr37jpo&symbol={ticker}&time_series_indicators=average_sentiment&data_points=0").json()
-#             lis.append()
-            
-#         except:
+        try:
+            lc_response=requests.get(f"https://api.lunarcrush.com/v2?data=assets&key=olr3cu6lnc897ezr37jpo&symbol={ticker}&time_series_indicators=average_sentiment&data_points=0").json()
+            ltick.append(lc_response['data'][0]['symbol'])
+            lsent.append(lc_response['data'][0]['average_sentiment'])
+
+        except:
+            pass
+
+
+    dic={'Symbol': ltick,
+         'Average Public Sentiment': lsent}  
+
+    df=pd.DataFrame.from_dict(dic)
+    return df
+
+def total_value(data):
+    today=datetime.datetime.today().strftime("%Y -%m -%d")
+    df=data.loc[data['timestamp']>=today].groupby(['contract_name','contract_ticker_symbol']).mean('close.quote').reset_index()
     
-#             pass
-#     return lis
+    return df['close.quote'].sum().round(2)
 
 def fig2(df_nested):
     colors = {
@@ -190,10 +207,7 @@ app.layout = html.Div(
                        
                     ],
                 ),
-                 dash_table.DataTable(
-                        id='datatable-paging',
-                        
-                    ),  
+         
 
                 # Div for News Headlines
                 html.Div(
@@ -275,9 +289,7 @@ def input_triggers_spinner(value,address):
     time.sleep(1)
     return display(value,address)
 
-#@app.callback(Output('container', 'children'),
- #             Input("chain_id", "value"),
-  #             Input("address", "value"),)
+
 
 def display(value,address):
 
@@ -304,6 +316,7 @@ def display(value,address):
 
                     lis.append( 
                         html.Div([
+                                   
                             dcc.Graph(
                                     id='graph1',
                                     figure=fig1(data),
@@ -311,16 +324,42 @@ def display(value,address):
                                     style={'display': 'inline-block'
 
                                 },
+                
+
                                 
                             ),
+                        html.Th(f" Total Valuation: {total_value(data)} $",className="display-inlineblock float-right"
+                        ),
                             dcc.Graph(
                                 id='graph2',
                                 figure=fig2(data),
                                 config= {'displaylogo': False},
-                                style={'display': 'inline-block'
+                                style={'display': 'inline-block'},
+                                
 
-                                },
-                            )
+                                
+                            ),
+                            dash_table.DataTable(
+                   
+                            columns=[{"name": i, "id": i} for i in lunar_sentiment(data).columns],
+                            data=lunar_sentiment(data).to_dict('records'),
+                            style_as_list_view=True,
+                               style_header={
+                                'backgroundColor': "#ff4c8b",
+                                'color':'#f7f7f7',
+                                'fontWeight': 'bold',
+                                'textAlign': 'center',
+                            },
+                            style_data={
+                                'whiteSpace': 'normal',
+                                'height': 'auto',
+                                'lineHeight': '15px',
+                                'textAlign': 'center',
+                                'backgroundColor':'black',
+                                'padding': '5px',
+                                'color': '#f7f7f7',
+                            },
+                        )
 
                             ])
                         )
