@@ -330,16 +330,9 @@ def display(value,address):
                             ),
                         html.Th(f" Total Valuation: {total_value(data)} $",className="display-inlineblock float-right"
                         ),
-                            dcc.Graph(
-                                id='graph2',
-                                figure=fig2(data),
-                                config= {'displaylogo': False},
-                                style={'display': 'inline-block'},
-                                
 
-                                
-                            ),
-                            dash_table.DataTable(
+
+                        dash_table.DataTable(
                    
                             columns=[{"name": i, "id": i} for i in lunar_sentiment(data).columns],
                             data=lunar_sentiment(data).to_dict('records'),
@@ -359,7 +352,17 @@ def display(value,address):
                                 'padding': '5px',
                                 'color': '#f7f7f7',
                             },
-                        )
+                        ),
+                            dcc.Graph(
+                                id='graph2',
+                                figure=fig2(data),
+                                config= {'displaylogo': False},
+                                style={'display': 'inline-block'},
+                                
+
+                                
+                            ),
+                            
 
                             ])
                         )
