@@ -15,6 +15,7 @@ from plotly import tools
 import time
 import dash_table
 
+
 def fig1(df_nested):
     colors = {
         'background': 'black',
