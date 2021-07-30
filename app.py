@@ -1,6 +1,6 @@
 import datetime
 import requests
-import json
+
 import pathlib
 import pandas as pd
 import dash
@@ -14,7 +14,6 @@ from dash.dependencies import Input, Output, State
 from plotly import tools
 import time
 import dash_table
-
 
 def fig1(df_nested):
     colors = {
